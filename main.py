@@ -22,6 +22,7 @@ class InputData(BaseModel):
     fuels: Fuel
     powerplants: list[PowerPlant]
 
+
 def calculateCost(plant, fuels):
     match plant.type:
         case "windturbine":
@@ -58,28 +59,26 @@ def alocatePowerProduction(powerplants, load):
             allocated = min(plant.pmax, remaining_load)
         
         allocated = math.floor(allocated*10) / 10.0
-        power_allocation.append({'name': plant.name, 'p': allocated})
+        power_allocation.append({'name': plant.name, 'p': allocated, 'pmax': plant.pmax, 'pmin': plant.pmin})
         remaining_load -= allocated
     
     # ldiff = load - sum([plant['p'] for plant in power_allocation])
-    # if ldiff > 0:
+    # if ldiff != 0:
     #     for i in range(len(power_allocation)):
-    #         if power_allocation[i]['p'] < powerplants[i]['pmax']:
-    #             diff = min(ldiff, powerplants[i]['pmax'] - power_allocation[i]['p'])
-    #             power_allocation[i]['p'] += diff
-    #             ldiff -= diff
-    #             if ldiff == 0:
-    #                 break
-    # elif ldiff < 0:
-    #     length = len(power_allocation)
-    #     for i in range(length):
-    #         if power_allocation[length-i-1]['p'] > powerplants[length-i-1]['pmin']:
-    #             diff = min(-ldiff, power_allocation[length-i-1]['p'] - powerplants[length-i-1]['pmin'])
-    #             power_allocation[length-i-1]['p'] -= diff
-    #             ldiff += diff
-    #             if ldiff == 0:
-    #                 break
-    
+    #         for j in range(i+1, len(power_allocation)):
+    #             if power_allocation[i]['p'] == power_allocation[i]['pmax'] and power_allocation[j]['p'] < power_allocation[j]['pmax']:
+    #                 diff = min(ldiff, power_allocation[i]['pmax'] - power_allocation[i]['p'])
+    #                 power_allocation[i]['p'] += diff
+    #                 ldiff -= diff
+    #                 if ldiff == 0:
+    #                     break
+    #             elif power_allocation[i]['p'] > power_allocation[i]['pmin'] and power_allocation[j]['p'] < power_allocation[j]['pmax']:
+    #                 diff = max(ldiff, power_allocation[i]['pmin'] - power_allocation[i]['p'])
+    #                 power_allocation[i]['p'] += diff
+    #                 ldiff -= diff
+    #                 if ldiff == 0:
+    #                     break
+
     return power_allocation
 
 
@@ -100,4 +99,4 @@ def productionPlan():
     return json.dumps(power_allocation)
 
 if __name__ == '__main__' :
-    app.run(host='localhost', port=8888)
+    app.run(host='0.0.0.0', port=8888)

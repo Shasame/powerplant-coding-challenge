@@ -1,5 +1,23 @@
 # powerplant-coding-challenge
 
+## My solution
+
+In order to run my solution you will need python installed and optionnaly docker.
+To run the solution localy in a container you can execute the following commands :
+
+docker build . -t codingGame:latest
+docker run -p 8888:8888 --name codingGame codingGame:latest
+
+You will then be able to interact with the API with http://localhost:8888
+
+You can also run this API outside of docker using python and the following commands:
+
+pip install -r requirements.txt
+python main.py
+
+## Observations
+
+During this exercise I was able to solve a part of the problem and dockerize my API, however I am aware that my solution does not work on every examples. I was working on a solution to re balance the allocation of energy production after the first basic one but i did not have enough time. 
 
 ## Welcome !
 
