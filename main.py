@@ -59,7 +59,7 @@ def alocatePowerProduction(powerplants, load):
             allocated = min(plant.pmax, remaining_load)
         
         allocated = math.floor(allocated*10) / 10.0
-        power_allocation.append({'name': plant.name, 'p': allocated, 'pmax': plant.pmax, 'pmin': plant.pmin})
+        power_allocation.append({'name': plant.name, 'p': allocated})
         remaining_load -= allocated
     
     # ldiff = load - sum([plant['p'] for plant in power_allocation])
